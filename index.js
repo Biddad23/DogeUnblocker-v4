@@ -2,11 +2,22 @@ import express from "express";
 import http from "node:http";
 import path from "node:path";
 import createBareServer from "@tomphttp/bare-server-node";
+import cors from "cors";
 
 const __dirname = process.cwd();
 const server = http.createServer();
 const app = express(server);
 const bareServer = createBareServer("/bare/");
+
+app.use(cors({
+  origin: [
+    "https://script.google.com",
+    "https://n.googleusercontent.com"
+  ],
+  methods: ["GET", "POST", "OPTIONS"],
+  allowedHeaders: ["*"],
+  credentials: false
+}));
 
 app.use(express.json());
 app.use(
